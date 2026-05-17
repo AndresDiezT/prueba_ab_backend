@@ -24,7 +24,7 @@ Backend para la prueba tecnica full stack de AB Comercial. Expone autenticacion 
 - Logging de peticiones HTTP en consola.
 - Migraciones con Alembic.
 - Seed con usuarios y datos demo.
-- Configuracion lista para Render.
+- Configuracion documentada para despliegue manual en Render.
 
 ## Modelo de vehiculo
 
@@ -213,35 +213,3 @@ docker compose --profile tools run --rm seed
 El contenedor del backend mantiene el `CMD` del `Dockerfile` para iniciar `uvicorn`. Docker Compose usa un servicio separado `migrate` para aplicar migraciones antes del arranque.
 
 El repositorio Docker es un plus de desarrollo local. La entrega principal se mantiene separada entre backend y frontend para conservar responsabilidades y despliegues independientes.
-
-## Deploy en Render
-
-El archivo `render.yaml` crea el Web Service y la base PostgreSQL.
-
-Comandos usados por Render:
-
-```text
-Build command: pip install -r requirements.txt
-Start command: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
-```
-
-Variables importantes:
-
-```text
-PYTHON_VERSION=3.11.9
-APP_NAME
-ENVIRONMENT
-DEBUG
-API_V1_PREFIX
-DATABASE_URL
-SECRET_KEY
-ALGORITHM
-ACCESS_TOKEN_EXPIRE_MINUTES
-CORS_ORIGINS
-```
-
-Despues del primer deploy, ejecuta una vez:
-
-```bash
-python -m scripts.seed
-```
