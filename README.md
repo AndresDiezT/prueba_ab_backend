@@ -228,6 +228,7 @@ Start command: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --por
 Variables importantes:
 
 ```text
+PYTHON_VERSION=3.11.9
 APP_NAME
 ENVIRONMENT
 DEBUG
