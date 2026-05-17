@@ -1,17 +1,21 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.exception_handlers import register_exception_handlers
-from app.core.logging import configure_logging
 from app.core.responses import success_response
 from app.middlewares.auth_middleware import AuthMiddleware
 from app.middlewares.logging_middleware import LoggingMiddleware
 from app.schemas.response import ApiResponse
 
 
-configure_logging()
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s - %(message)s",
+)
 
 
 def create_app() -> FastAPI:

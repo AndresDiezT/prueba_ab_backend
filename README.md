@@ -21,7 +21,7 @@ Backend para la prueba tecnica full stack de AB Comercial. Expone autenticacion 
 - CRUD de vehiculos protegido por RBAC.
 - Respuestas consistentes con `success`, `message`, `data` y `errors`.
 - Manejo centralizado de errores y validaciones.
-- Logging de peticiones HTTP.
+- Logging de peticiones HTTP en consola.
 - Migraciones con Alembic.
 - Seed con usuarios y datos demo.
 - Configuracion lista para Render.
@@ -65,10 +65,6 @@ Variables principales:
 | `ALGORITHM` | Algoritmo JWT, por defecto `HS256`. |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Tiempo de vida del token. |
 | `CORS_ORIGINS` | Origenes permitidos separados por coma. |
-| `LOG_FILE_PATH` | Ruta del archivo de logs, por defecto `logs/app.log`. |
-| `LOG_MAX_BYTES` | Tamano maximo de cada archivo antes de rotar. |
-| `LOG_BACKUP_COUNT` | Cantidad de archivos historicos a conservar. |
-
 Ejemplo local de `DATABASE_URL`:
 
 ```env
@@ -194,42 +190,6 @@ Resultado esperado:
 19 passed
 ```
 
-## Logging
-
-La API registra cada peticion HTTP en consola y en archivo. El archivo rota automaticamente por tamano para evitar que crezca indefinidamente.
-
-Configuracion por defecto para desarrollo local:
-
-```env
-LOG_FILE_PATH=logs/app.log
-LOG_MAX_BYTES=1000000
-LOG_BACKUP_COUNT=5
-```
-
-Con esa configuracion se conserva `logs/app.log` y hasta 5 archivos historicos rotados.
-
-La carpeta `logs/` se conserva vacia en el repositorio mediante `logs/.gitkeep`, pero los archivos reales de log quedan ignorados por Git.
-
-Si ejecutas el backend con Docker Compose y montas un volumen como:
-
-```yaml
-volumes:
-  - ${BACKEND_CONTEXT}/logs:/app/logs
-```
-
-usa esta ruta dentro del `.env` del backend:
-
-```env
-LOG_FILE_PATH=/app/logs/app.log
-```
-
-En servidores Linux puede ser necesario dar permisos de escritura a la carpeta montada:
-
-```bash
-mkdir -p logs
-chmod -R 775 logs
-```
-
 ## Docker Opcional
 
 Este backend puede ejecutarse con Docker desde un repositorio opcional que orquesta backend y frontend juntos:
@@ -277,9 +237,6 @@ SECRET_KEY
 ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES
 CORS_ORIGINS
-LOG_FILE_PATH
-LOG_MAX_BYTES
-LOG_BACKUP_COUNT
 ```
 
 Despues del primer deploy, ejecuta una vez:

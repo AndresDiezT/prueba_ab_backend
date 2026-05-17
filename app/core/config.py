@@ -19,9 +19,6 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int
 
     cors_origins: str
-    log_file_path: str = "logs/app.log"
-    log_max_bytes: int = 1_000_000
-    log_backup_count: int = 5
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
