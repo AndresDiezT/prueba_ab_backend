@@ -198,7 +198,7 @@ Resultado esperado:
 
 La API registra cada peticion HTTP en consola y en archivo. El archivo rota automaticamente por tamano para evitar que crezca indefinidamente.
 
-Configuracion por defecto:
+Configuracion por defecto para desarrollo local:
 
 ```env
 LOG_FILE_PATH=logs/app.log
@@ -207,6 +207,28 @@ LOG_BACKUP_COUNT=5
 ```
 
 Con esa configuracion se conserva `logs/app.log` y hasta 5 archivos historicos rotados.
+
+La carpeta `logs/` se conserva vacia en el repositorio mediante `logs/.gitkeep`, pero los archivos reales de log quedan ignorados por Git.
+
+Si ejecutas el backend con Docker Compose y montas un volumen como:
+
+```yaml
+volumes:
+  - ${BACKEND_CONTEXT}/logs:/app/logs
+```
+
+usa esta ruta dentro del `.env` del backend:
+
+```env
+LOG_FILE_PATH=/app/logs/app.log
+```
+
+En servidores Linux puede ser necesario dar permisos de escritura a la carpeta montada:
+
+```bash
+mkdir -p logs
+chmod -R 775 logs
+```
 
 ## Docker Opcional
 

@@ -6,4 +6,5 @@ venv/
 *.db
 *.db-journal
 .pytest_cache/
-logs/
+logs/*
+!logs/.gitkeep
